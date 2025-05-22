@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UserAuditService {
@@ -23,7 +22,7 @@ public class UserAuditService {
   @Autowired
   private CqlSession session;
 
-  public void insertUserAction(UUID userId, Action type, String log) {
+  public void insertUserAction(Long userId, Action type, String log) {
     PreparedStatement preparedStatement = session.prepare(
         "INSERT INTO my_keyspace.user_audits (user_id, timestamp, type, log) " +
             "VALUES (?, ?, ?, ?)"
@@ -39,7 +38,7 @@ public class UserAuditService {
     session.execute(boundStatement);
   }
 
-  public List<UserAuditDto> getUserAuditById(UUID userId) throws UserNotFoundException {
+  public List<UserAuditDto> getUserAuditById(Long userId) throws UserNotFoundException {
     PreparedStatement statement =
         session.prepare(
             "SELECT * FROM "
@@ -56,7 +55,7 @@ public class UserAuditService {
     for (Row row : rows) {
       userAudits.add(
           new UserAuditDto(
-              row.getUuid("user_id"),
+              row.getLong("user_id"),
               row.getInstant("timestamp"),
               row.getString("type"),
               row.getString("log")
