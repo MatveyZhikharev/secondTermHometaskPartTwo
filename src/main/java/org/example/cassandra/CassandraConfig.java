@@ -30,7 +30,7 @@ public class CassandraConfig {
 
     session.execute("""
             CREATE TABLE IF NOT EXISTS my_keyspace.user_audits (
-                user_id UUID,
+                user_id BIGINT,
                 timestamp TIMESTAMP,
                 type TEXT,
                 log TEXT,

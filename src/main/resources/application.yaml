@@ -4,3 +4,11 @@ spring:
     port: 9042
     keyspace-name: my_keyspace
     local-datacenter: datacenter1
+  kafka:
+    bootstrap-servers: localhost:29093
+    consumer:
+      group-id: audit-group
+      enable-auto-commit: false
+    listener:
+      ack-mode: manual_immediate
+topic-to-send-message: audit

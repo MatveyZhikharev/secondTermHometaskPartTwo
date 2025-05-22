@@ -1,17 +1,18 @@
 package org.example.entity;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.time.Instant;
-import java.util.UUID;
 
+@AllArgsConstructor
 @Table(value = "user_audits")
 public class UserAudit {
   @PrimaryKeyColumn(name = "user_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
-  private UUID userId;
+  private Long userId;
 
   @PrimaryKeyColumn(name = "timestamp", ordinal = 1, type = PrimaryKeyType.CLUSTERED)
   private Instant timestamp;
@@ -22,11 +23,11 @@ public class UserAudit {
   @Column(value = "log")
   private String log;
 
-  public UUID getUserId() {
+  public Long getUserId() {
     return userId;
   }
 
-  public void setUserId(UUID userId) {
+  public void setUserId(Long userId) {
     this.userId = userId;
   }
 
